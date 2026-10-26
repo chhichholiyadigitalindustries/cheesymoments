@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | CHEESY MOMENTS KAITHAL</title>
+  <meta name="description" content="Secure Admin Dashboard for Cheesy Moments Kaithal. Real-time menu management, prices, availability, offers and QR code generation.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- ==========================================================================
+       AUTHENTICATION SCREEN (PIN LOGIN)
+       ========================================================================== -->
+  <div class="admin-auth-screen" id="adminAuthScreen">
+    <div class="auth-card">
+      <img src="assets/images/logo.png" alt="Cheesy Moments Logo" class="auth-logo">
+      <h1 class="auth-title">Staff Portal</h1>
+      <p class="auth-subtitle">Cheesy Moments Kaithal Menu Management</p>
+
+      <form id="adminLoginForm">
+        <div class="auth-input-group">
+          <label for="adminPinInput" style="display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.4rem; color: var(--color-cream-muted);">
+            Enter Security PIN
+          </label>
+          <input 
+            type="password" 
+            id="adminPinInput" 
+            class="auth-input" 
+            placeholder="••••••••" 
+            maxlength="16"
+            required
+            autocomplete="current-password"
+            autofocus>
+          <div id="adminPinError" style="color: #FF6B5E; font-size: 0.85rem; margin-top: 0.5rem; display: none;"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          Unlock Dashboard →
+        </button>
+      </form>
+
+      <div class="auth-hint">
+        🔐 <strong>Demo Security PIN:</strong> <code>cheesy2024</code><br>
+        (Staff & Management Access)
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ADMIN NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="admin-navbar">
+    <div class="admin-nav-brand">
+      <img src="assets/images/logo.png" alt="Cheesy Moments Logo" style="width: 38px; height: 38px; border-radius: 999px; border: 1.5px solid var(--color-primary);">
+      <span style="font-size: 1.15rem; font-weight: 900; color: var(--color-cream);">CHEESY MOMENTS</span>
+      <span class="admin-nav-badge">ADMIN DASHBOARD</span>
+    </div>
+
+    <div class="admin-nav-actions">
+      <a href="index.html" class="btn btn-outline btn-sm" target="_blank">🌐 Live Website</a>
+      <a href="menu.html" class="btn btn-primary btn-sm" target="_blank">🍕 Digital Menu</a>
+      <button type="button" class="btn btn-outline btn-sm" id="adminLogoutBtn" style="border-color: rgba(255,255,255,0.2);">Logout 🔒</button>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       ADMIN MAIN CONTENT
+       ========================================================================== -->
+  <main class="admin-main">
+    <div class="container">
+
+      <!-- Real-time Sync & Persistence Notice -->
+      <div class="persistence-note-box">
+        ⚡ <strong>Live Menu Persistence:</strong> All item updates, price modifications, stock status, and offers are permanently stored in your browser's persistent storage and sync across all tabs in real-time. Changes immediately reflect on the public <a href="menu.html" target="_blank" style="color: var(--color-primary); text-decoration: underline;">/menu.html</a> digital menu.
+      </div>
+
+      <!-- Quick Statistics Cards -->
+      <div class="admin-stats-grid">
+        <div class="stat-box">
+          <div>
+            <div class="stat-val" id="statTotalItems">101</div>
+            <div class="stat-title">Menu Dishes</div>
+          </div>
+          <div class="stat-icon">🍕</div>
+        </div>
+
+        <div class="stat-box">
+          <div>
+            <div class="stat-val" id="statTotalCats">23</div>
+            <div class="stat-title">Categories</div>
+          </div>
+          <div class="stat-icon">📑</div>
+        </div>
+
+        <div class="stat-box">
+          <div>
+            <div class="stat-val" id="statTotalOffers">4</div>
+            <div class="stat-title">Active Offers</div>
+          </div>
+          <div class="stat-icon">🏷️</div>
+        </div>
+
+        <div class="stat-box">
+          <div>
+            <div class="stat-val" id="statOutOfStock">0</div>
+            <div class="stat-title">Out of Stock</div>
+          </div>
+          <div class="stat-icon">⚠️</div>
+        </div>
+      </div>
+
+      <!-- Admin Tabs Navigation -->
+      <div class="admin-tabs-nav">
+        <button type="button" class="admin-tab-btn active" data-tab="items">
+          <span>🍕</span>
+          <span>Menu Dishes & Prices</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="offers">
+          <span>🏷️</span>
+          <span>Special Offers</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="settings">
+          <span>⚙️</span>
+          <span>Restaurant Details</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="qr">
+          <span>📱</span>
+          <span>QR Code Studio</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="backup">
+          <span>💾</span>
+          <span>Backup & Cloud Sync</span>
+        </button>
+      </div>
+
+      <!-- ==========================================================================
+           TAB 1: MENU DISHES & PRICES
+           ========================================================================== -->
+      <div class="admin-tab-pane" id="tabPane-items">
+        <div class="admin-toolbar">
+          <div class="admin-toolbar-left">
+            <input 
+              type="search" 
+              id="adminItemSearch" 
+              class="admin-search-input" 
+              placeholder="Search dishes by name or ingredient...">
+            
+            <select id="adminCategoryFilter" class="admin-select">
+              <option value="all">All Categories</option>
+              <!-- Injected via admin.js -->
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-sm" id="adminAddNewItemBtn">
+            <span>+ Add New Dish</span>
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Dish Details</th>
+                <th>Category</th>
+                <th>Prices / Sizes</th>
+                <th>Stock Availability</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminItemsTableBody">
+              <!-- Injected via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+           TAB 2: SPECIAL OFFERS
+           ========================================================================== -->
+      <div class="admin-tab-pane" id="tabPane-offers" style="display: none;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-cream); margin-bottom: 1rem;">
+              Active Promotional Offers
+            </h3>
+            <div id="adminOffersList">
+              <!-- Injected via admin.js -->
+            </div>
+          </div>
+
+          <div class="stat-box" style="flex-direction: column; align-items: stretch;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-cream); margin-bottom: 1.25rem;">
+              Add New Promo Offer
+            </h3>
+            <form id="adminAddOfferForm">
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="newOfferTitle">Offer Title *</label>
+                <input type="text" id="newOfferTitle" class="admin-form-input" placeholder="e.g. 50% OFF ON ALL MOMOS" required>
+              </div>
+
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="newOfferSubtitle">Subtitle</label>
+                <input type="text" id="newOfferSubtitle" class="admin-form-input" placeholder="e.g. Dine-in anniversary celebration">
+              </div>
+
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="newOfferDesc">Offer Description</label>
+                <textarea id="newOfferDesc" class="admin-form-textarea" rows="2" placeholder="Full terms or details..."></textarea>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="admin-form-group">
+                  <label class="admin-form-label" for="newOfferBadge">Badge Text</label>
+                  <input type="text" id="newOfferBadge" class="admin-form-input" placeholder="e.g. 50% OFF">
+                </div>
+                <div class="admin-form-group">
+                  <label class="admin-form-label" for="newOfferCode">Promo Code</label>
+                  <input type="text" id="newOfferCode" class="admin-form-input" placeholder="e.g. CHEESY50">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                Publish Special Offer
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+           TAB 3: RESTAURANT DETAILS
+           ========================================================================== -->
+      <div class="admin-tab-pane" id="tabPane-settings" style="display: none;">
+        <div class="stat-box" style="max-width: 600px; margin: 0 auto; flex-direction: column; align-items: stretch;">
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--color-cream); margin-bottom: 1.5rem;">
+            Restaurant Contact & Timings
+          </h3>
+
+          <form id="adminSettingsForm">
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="settBrandName">Brand Name</label>
+              <input type="text" id="settBrandName" class="admin-form-input">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="settPhone">Phone Number</label>
+                <input type="text" id="settPhone" class="admin-form-input">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label" for="settWhatsApp">WhatsApp Number</label>
+                <input type="text" id="settWhatsApp" class="admin-form-input">
+              </div>
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="settHours">Opening Hours</label>
+              <input type="text" id="settHours" class="admin-form-input" placeholder="e.g. 10:30 AM – 10:45 PM">
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="settAddress">Full Address</label>
+              <textarea id="settAddress" class="admin-form-textarea" rows="2"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.75rem;">
+              Save Restaurant Details
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+           TAB 4: QR CODE STUDIO
+           ========================================================================== -->
+      <div class="admin-tab-pane" id="tabPane-qr" style="display: none;">
+        <div class="qr-studio-grid">
+          <div class="qr-preview-box">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-cream); margin-bottom: 0.35rem;">Live QR Code Preview</h3>
+            <p style="font-size: 0.85rem; color: var(--color-cream-muted); margin-bottom: 1.5rem;">Scans directly to your digital ordering menu</p>
+
+            <div class="qr-canvas-holder">
+              <canvas id="adminQrCanvas" width="280" height="280"></canvas>
+            </div>
+
+            <div style="display: flex; gap: 0.85rem; flex-wrap: wrap; justify-content: center;">
+              <button type="button" class="btn btn-primary btn-sm" id="adminQrDownloadPng">
+                📥 Download PNG
+              </button>
+              <button type="button" class="btn btn-outline btn-sm" id="adminQrDownloadSvg">
+                📥 Download SVG
+              </button>
+              <a href="qr-poster.html" target="_blank" class="btn btn-outline btn-sm">
+                🖨️ Print Poster
+              </a>
+            </div>
+          </div>
+
+          <div class="qr-settings-card">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-cream); margin-bottom: 1.25rem;">
+              QR Code Configuration
+            </h3>
+
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="adminQrUrlInput">Digital Menu Target URL *</label>
+              <input type="url" id="adminQrUrlInput" class="admin-form-input" placeholder="https://cheesymoments.vercel.app/menu.html">
+              <small style="display: block; font-size: 0.75rem; color: var(--color-cream-muted); margin-top: 0.4rem;">
+                When deploying to your custom domain or Vercel, change this URL to your live address.
+              </small>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-sm" id="adminQrUpdateBtn" style="width: 100%; margin-bottom: 1.5rem;">
+              Generate & Update QR Code
+            </button>
+
+            <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-secondary); margin-bottom: 0.5rem;">
+                Table Placement Instructions:
+              </h4>
+              <ul style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; padding-left: 1.2rem;">
+                <li>Print on durable cardstock or acrylic table tent holders.</li>
+                <li>QR codes feature high error correction (Level H) allowing scanning even in dim restaurant lighting.</li>
+                <li>Write the Table Number in the designated blank field.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+           TAB 5: BACKUP & CLOUD SYNC
+           ========================================================================== -->
+      <div class="admin-tab-pane" id="tabPane-backup" style="display: none;">
+        <div style="max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <div class="stat-box" style="flex-direction: column; align-items: flex-start;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-cream); margin-bottom: 0.5rem;">
+              📥 Export Menu Data Backup
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 1.25rem;">
+              Download a complete JSON snapshot containing all 101 menu items, custom prices, categories, and active promotions.
+            </p>
+            <button type="button" class="btn btn-primary btn-sm" id="adminExportJsonBtn">
+              Download JSON Backup
+            </button>
+          </div>
+
+          <div class="stat-box" style="flex-direction: column; align-items: flex-start;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--color-cream); margin-bottom: 0.5rem;">
+              📤 Restore / Import Menu Data
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 1.25rem;">
+              Upload a previously exported JSON backup file to restore all menu items and prices.
+            </p>
+            <input type="file" id="adminImportJsonInput" accept=".json" style="font-size: 0.9rem; color: var(--color-cream);">
+          </div>
+
+          <div class="stat-box" style="flex-direction: column; align-items: flex-start; border-color: rgba(217, 54, 37, 0.4);">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #FF6B5E; margin-bottom: 0.5rem;">
+              ⚠️ Factory Reset Menu
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 1.25rem;">
+              Reset all items, prices, and categories back to the official verified 101 items from the original reference menus.
+            </p>
+            <button type="button" class="btn btn-outline btn-sm" id="adminResetFactoryBtn" style="border-color: #D93625; color: #FF6B5E;">
+              Restore Factory Menu
+            </button>
+          </div>
+
+          <!-- Cloud Database Setup Information -->
+          <div class="persistence-note-box" style="background: rgba(46, 125, 50, 0.08); border-color: rgba(46, 125, 50, 0.3);">
+            <h4 style="font-size: 0.95rem; font-weight: 800; color: #4CAF50; margin-bottom: 0.5rem;">
+              ☁️ Cloud Database Configuration:
+            </h4>
+            <p style="font-size: 0.85rem; line-height: 1.6; color: var(--color-cream);">
+              This application currently utilizes persistent <strong>Browser LocalStorage</strong> with JSON backup & restore. To connect to an external centralized cloud database (e.g. Firebase Firestore or Supabase), configure your credentials in <code>data/menu-data.js</code> under <code>CheesyStorage</code>.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       ADD / EDIT FOOD ITEM MODAL
+       ========================================================================== -->
+  <div class="custom-modal-backdrop" id="adminItemEditModal">
+    <div class="custom-modal" style="max-width: 580px;">
+      <div style="padding: 1.25rem 1.5rem; background: #17120D; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between;">
+        <h3 id="adminModalTitle" style="font-size: 1.25rem; font-weight: 900; color: var(--color-cream);">Add New Dish</h3>
+        <button type="button" class="modal-close-btn" id="adminModalCloseBtn" style="position: static;">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="adminItemForm">
+          <div class="admin-form-group">
+            <label class="admin-form-label" for="modalItemName">Dish Name *</label>
+            <input type="text" id="modalItemName" class="admin-form-input" placeholder="e.g. Cheesy Margherita" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="modalItemCategory">Category *</label>
+              <select id="modalItemCategory" class="admin-form-input" style="background: #251D16;">
+                <!-- Populated via admin.js -->
+              </select>
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="modalPricingType">Pricing Type *</label>
+              <select id="modalPricingType" class="admin-form-input" style="background: #251D16;">
+                <option value="fixed">Fixed Single Price</option>
+                <option value="sizes">3 Sizes (Slice / Small / Medium)</option>
+                <option value="portion">2 Portions (Single / Meal)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Price Field: Fixed -->
+          <div id="pricingBoxFixed" class="admin-form-group">
+            <label class="admin-form-label" for="modalPriceFixed">Price (₹) *</label>
+            <input type="number" id="modalPriceFixed" class="admin-form-input" placeholder="99">
+          </div>
+
+          <!-- Price Fields: 3 Sizes -->
+          <div id="pricingBoxSizes" class="admin-form-group" style="display: none;">
+            <label class="admin-form-label">Prices by Size (₹)</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.65rem;">
+              <div>
+                <small style="font-size: 0.72rem; color: var(--color-cream-muted);">Giant Slice</small>
+                <input type="number" id="modalPriceSlice" class="admin-form-input" placeholder="99">
+              </div>
+              <div>
+                <small style="font-size: 0.72rem; color: var(--color-cream-muted);">Small 7"</small>
+                <input type="number" id="modalPriceSmall" class="admin-form-input" placeholder="109">
+              </div>
+              <div>
+                <small style="font-size: 0.72rem; color: var(--color-cream-muted);">Medium 10"</small>
+                <input type="number" id="modalPriceMedium" class="admin-form-input" placeholder="199">
+              </div>
+            </div>
+          </div>
+
+          <!-- Price Fields: Portions -->
+          <div id="pricingBoxPortion" class="admin-form-group" style="display: none;">
+            <label class="admin-form-label">Prices by Portion (₹)</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div>
+                <small style="font-size: 0.72rem; color: var(--color-cream-muted);">Single Portion</small>
+                <input type="number" id="modalPriceSingle" class="admin-form-input" placeholder="49">
+              </div>
+              <div>
+                <small style="font-size: 0.72rem; color: var(--color-cream-muted);">Meal (Fries + Coke)</small>
+                <input type="number" id="modalPriceMeal" class="admin-form-input" placeholder="119">
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label" for="modalItemDesc">Short Description</label>
+            <textarea id="modalItemDesc" class="admin-form-textarea" rows="2" placeholder="List toppings, sauces, or preparation style..."></textarea>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label" for="modalItemImage">Image Path / URL</label>
+            <input type="text" id="modalItemImage" class="admin-form-input" placeholder="assets/images/hero-pizza.jpg">
+          </div>
+
+          <div style="display: flex; gap: 1.5rem; align-items: center; margin: 1rem 0;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.88rem;">
+              <input type="checkbox" id="modalItemBestseller" style="accent-color: var(--color-primary);">
+              <span>⭐ Bestseller Badge</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.88rem;">
+              <input type="checkbox" id="modalItemSpicy" style="accent-color: var(--color-accent-red);">
+              <span>🌶️ Spicy Tag</span>
+            </label>
+          </div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary" style="flex-grow: 1;">
+              Save Dish To Menu
+            </button>
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('adminItemEditModal').classList.remove('open');">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="data/menu-data.js"></script>
+  <script src="assets/js/vendor/qrcode.min.js"></script>
+  <script src="assets/js/qr-generator.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

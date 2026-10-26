@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart QR Digital Menu | CHEESY MOMENTS KAITHAL</title>
+  <meta name="description" content="Explore the official digital menu of Cheesy Moments Kaithal. Authentic Neapolitan pizzas, personal giant slices, wheat momos, burgers, pastas and waffles. Order directly on WhatsApp.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/menu.css">
+</head>
+<body class="menu-app-body">
+
+  <!-- ==========================================================================
+       DIGITAL MENU TOP HEADER
+       ========================================================================== -->
+  <header class="menu-header-bar" id="menuHeaderBar">
+    <div class="container menu-header-container">
+      <a href="index.html" class="menu-brand-small" title="Back to Homepage">
+        <img src="assets/images/logo.png" alt="Cheesy Moments Logo" class="menu-brand-logo">
+        <div>
+          <div class="menu-brand-name">CHEESY MOMENTS</div>
+          <div class="menu-brand-subtitle">Sector 20 HUDA • Kaithal</div>
+        </div>
+      </a>
+
+      <div class="menu-header-actions">
+        <a href="tel:+918685000092" class="btn btn-outline btn-sm" style="padding: 0.45rem 0.8rem;" title="Call Restaurant">
+          <span>📞</span>
+        </a>
+        <a href="https://wa.me/918685000092" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm" style="padding: 0.45rem 0.8rem;" title="WhatsApp Enquiry">
+          <span>💬</span>
+        </a>
+        <button type="button" class="cart-icon-btn js-cart-toggle" aria-label="Open Cart" title="View Cart">
+          <span>🛒</span>
+          <span class="cart-badge-count" style="display: none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       WELCOME BANNER
+       ========================================================================== -->
+  <section class="menu-welcome-banner">
+    <div class="container welcome-inner">
+      <div class="welcome-text-col">
+        <div class="badge-pill" style="margin-bottom: 0.65rem;">Table QR Smart Ordering</div>
+        <h1>WHAT ARE YOU CRAVING TODAY?</h1>
+        <p>Explore our complete authentic menu. Customize your crust, sizes, and toppings, then send your order directly to our kitchen via WhatsApp!</p>
+        
+        <div class="welcome-meta-chips">
+          <span class="meta-chip veg">● 100% Pure Veg</span>
+          <span class="meta-chip">🍕 Neapolitan Dough</span>
+          <span class="meta-chip">⏰ 10:30 AM – 10:45 PM</span>
+          <span class="meta-chip">📍 Booth No. 182</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; flex-shrink: 0;">
+        <a href="qr-poster.html" class="btn btn-outline btn-sm" target="_blank">
+          <span>📱 Print QR Poster</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       STICKY CONTROLS: SEARCH, FILTERS & CATEGORY TABS
+       ========================================================================== -->
+  <div class="menu-controls-bar">
+    <div class="container">
+      <!-- Search Input -->
+      <div class="search-input-wrap">
+        <span class="search-icon-left">🔍</span>
+        <input 
+          type="search" 
+          id="menuSearchInput" 
+          class="menu-search-input" 
+          placeholder="Search 101+ dishes (e.g. Margherita, Momos, Burger, Waffle, Shake)..."
+          autocomplete="off">
+        <button type="button" id="searchClearBtn" class="search-clear-btn" aria-label="Clear Search">✕</button>
+      </div>
+
+      <!-- Quick Filter Chips -->
+      <div class="filter-pills-row">
+        <button type="button" class="filter-chip active" data-filter="all">All Dishes</button>
+        <button type="button" class="filter-chip" data-filter="bestseller">🔥 Bestsellers</button>
+        <button type="button" class="filter-chip" data-filter="budget">🏷️ Under ₹99 Range</button>
+        <button type="button" class="filter-chip" data-filter="pizza">🍕 All Pizzas</button>
+        <button type="button" class="filter-chip" data-filter="momos">🥟 Momos & Platters</button>
+        <button type="button" class="filter-chip" data-filter="spicy">🌶️ Spicy Specials</button>
+      </div>
+
+      <!-- Horizontal Sticky Category Scroll Tabs -->
+      <div class="category-tabs-scroll" id="categoryTabs">
+        <!-- Injected via menu.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       DIGITAL MENU CONTENT SECTIONS
+       ========================================================================== -->
+  <main class="digital-menu-main">
+    <div class="container" id="menuSectionsContainer">
+      <!-- Injected via menu.js -->
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       ITEM CUSTOMIZATION MODAL (SIZES, ADD-ONS & QUANTITY)
+       ========================================================================== -->
+  <div class="custom-modal-backdrop" id="customModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalItemTitle">
+    <div class="custom-modal">
+      <div class="modal-header">
+        <img src="assets/images/hero-pizza.jpg" alt="Dish preview" id="modalItemImg">
+        <div class="modal-header-gradient"></div>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <h3 class="modal-item-title" id="modalItemTitle">Dish Name</h3>
+        <p class="modal-item-desc" id="modalItemDesc">Dish description goes here.</p>
+
+        <!-- Dynamic Sizes / Portions -->
+        <div id="modalSizesSection">
+          <h4 class="modal-section-title">Select Size / Portion</h4>
+          <div class="custom-options-group" id="modalSizesContainer">
+            <!-- Dynamic sizes radio options -->
+          </div>
+        </div>
+
+        <!-- Dynamic Add-ons (Cheese Burst, Kurkure, etc.) -->
+        <div id="modalAddOnsSection" style="display: none;">
+          <h4 class="modal-section-title">Optional Add-Ons</h4>
+          <div class="custom-options-group" id="modalAddOnsContainer">
+            <!-- Dynamic checkboxes -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <div class="quantity-stepper">
+          <button type="button" class="step-btn" id="modalQtyMinus" aria-label="Decrease quantity">−</button>
+          <span class="stepper-val" id="modalQtyVal">1</span>
+          <button type="button" class="step-btn" id="modalQtyPlus" aria-label="Increase quantity">+</button>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-add-modal" id="modalAddBtn">
+          <span>Add To Cart</span>
+          <span>•</span>
+          <span id="modalTotalPrice">₹99</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SLIDE-OVER SHOPPING CART DRAWER
+       ========================================================================== -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay">
+    <div class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle">
+      <div class="cart-drawer-header">
+        <div class="cart-title-wrap">
+          <span>🛒</span>
+          <h3 class="cart-title" id="cartDrawerTitle">Your Order</h3>
+        </div>
+        <button type="button" class="modal-close-btn" id="cartDrawerCloseBtn" aria-label="Close cart">✕</button>
+      </div>
+
+      <!-- Empty Cart State -->
+      <div class="cart-empty-state" id="cartEmptyState">
+        <div class="cart-empty-icon">🍕</div>
+        <h4 style="font-size: 1.25rem; font-weight: 800; color: #FFF; margin-bottom: 0.5rem;">Your Cart Is Empty</h4>
+        <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Explore our authentic pizzas, momos, and burgers to start your order.</p>
+        <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('cartDrawerCloseBtn').click();">
+          Browse Menu Dishes
+        </button>
+      </div>
+
+      <!-- Cart Itemized List -->
+      <div class="cart-items-list" id="cartItemsList" style="display: none;">
+        <!-- Injected via menu.js -->
+      </div>
+
+      <!-- Table / Customer Details Form -->
+      <form class="cart-order-form" id="cartOrderForm" style="display: none;" onsubmit="return false;">
+        <div class="form-field-group">
+          <label class="form-label" for="tableNumberInput">Table Number / Delivery / Takeaway *</label>
+          <input type="text" id="tableNumberInput" class="form-input-text" placeholder="e.g. Table 4, Booth 182, or Takeaway" required>
+        </div>
+
+        <div class="form-field-group">
+          <label class="form-label" for="customerNameInput">Your Name (Optional)</label>
+          <input type="text" id="customerNameInput" class="form-input-text" placeholder="e.g. Abhishek">
+        </div>
+
+        <div class="form-field-group">
+          <label class="form-label" for="orderNotesInput">Cooking Instructions / Notes (Optional)</label>
+          <input type="text" id="orderNotesInput" class="form-input-text" placeholder="e.g. Extra spicy, less cheese, no onions...">
+        </div>
+      </form>
+
+      <!-- Cart Footer & WhatsApp Action -->
+      <div class="cart-drawer-footer" id="cartDrawerFooter" style="display: none;">
+        <div class="cart-bill-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotal" style="font-weight: 800; color: #FFF;">₹0</span>
+        </div>
+        <div class="cart-bill-row">
+          <span>Taxes & Service</span>
+          <span style="color: #4CAF50; font-weight: 700;">Included in Price</span>
+        </div>
+        <div class="cart-bill-row cart-bill-total">
+          <span>Grand Total</span>
+          <span id="cartTotal">₹0</span>
+        </div>
+
+        <div class="cart-action-buttons">
+          <button type="button" class="btn btn-whatsapp" id="whatsappOrderBtn" style="width: 100%; padding: 0.95rem;">
+            <span>💬 ORDER VIA WHATSAPP</span>
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" id="clearCartBtn" style="width: 100%; border: none; opacity: 0.7;">
+            Clear Cart
+          </button>
+        </div>
+        
+        <p style="font-size: 0.72rem; color: var(--color-cream-muted); text-align: center; margin-top: 0.65rem;">
+          Sends itemized order directly to restaurant phone (+91 8685000092) for instant confirmation.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       STICKY BOTTOM CART BAR (MOBILE VIEW)
+       ========================================================================== -->
+  <aside class="mobile-bottom-cart-bar" id="mobileBottomCartBar" aria-label="Active Cart Summary">
+    <div class="bar-cart-summary">
+      <span class="bar-cart-count" id="barCartCount">0 items</span>
+      <span class="bar-cart-total" id="barCartTotal">₹0</span>
+    </div>
+    <button type="button" class="btn btn-primary btn-sm js-cart-toggle" style="padding: 0.6rem 1.25rem;">
+      <span>View Cart 🛒</span>
+    </button>
+  </aside>
+
+  <!-- Core Scripts -->
+  <script src="data/menu-data.js"></script>
+  <script src="assets/js/menu.js"></script>
+</body>
+</html>

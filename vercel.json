@@ -1,0 +1,17 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/menu", "destination": "/menu.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/qr", "destination": "/qr-poster.html" },
+    { "source": "/poster", "destination": "/qr-poster.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}

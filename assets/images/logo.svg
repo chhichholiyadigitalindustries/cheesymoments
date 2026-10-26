@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <radialGradient id="bgGrad" cx="40%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#FFCE00"/>
+      <stop offset="100%" stop-color="#FFAC00"/>
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#17120D" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Yellow Circle Badge -->
+  <circle cx="250" cy="250" r="230" fill="url(#bgGrad)" stroke="#17120D" stroke-width="12" filter="url(#shadow)"/>
+  
+  <!-- Dripping Cheese Wedge Icon -->
+  <g transform="translate(250, 185)">
+    <!-- Cheese Outline with Drips -->
+    <path d="M -115,-40 
+             L 65,-105 
+             C 80,-110 100,-95 95,-75 
+             L 85,-20 
+             C 90,-10 90,8 80,18
+             L 70,26
+             C 64,28 55,26 52,18
+             C 50,12 45,12 42,16
+             C 38,32 35,72 22,72
+             C 10,72 12,32 5,24
+             C 0,16 -7,16 -11,24
+             C -18,38 -18,80 -34,80
+             C -47,80 -45,40 -55,22
+             C -60,16 -68,16 -72,22
+             C -80,35 -82,60 -92,60
+             C -102,60 -100,32 -106,18
+             C -110,8 -112,-5 -115,-40 Z" 
+          fill="#FFCE00" 
+          stroke="#17120D" 
+          stroke-width="14" 
+          stroke-linejoin="round" 
+          stroke-linecap="round"/>
+          
+    <!-- Crust Ridge Top Line -->
+    <path d="M -110,-35 L 68,-100" stroke="#17120D" stroke-width="12" stroke-linecap="round"/>
+    
+    <!-- Cheese Holes -->
+    <circle cx="30" cy="-55" r="16" fill="none" stroke="#17120D" stroke-width="9"/>
+    <circle cx="-25" cy="-35" r="13" fill="none" stroke="#17120D" stroke-width="9"/>
+    <circle cx="35" cy="-15" r="11" fill="none" stroke="#17120D" stroke-width="8.5"/>
+    <!-- Small isolated drip dot on right -->
+    <circle cx="60" cy="38" r="7.5" fill="#17120D"/>
+  </g>
+  
+  <!-- Typography CHEESY MOMENTS -->
+  <text x="250" y="372" 
+        text-anchor="middle" 
+        font-family="system-ui, -apple-system, 'Outfit', 'Montserrat', 'Arial Black', sans-serif" 
+        font-weight="900" 
+        font-size="46" 
+        letter-spacing="2" 
+        fill="#17120D">CHEESY</text>
+        
+  <text x="250" y="420" 
+        text-anchor="middle" 
+        font-family="system-ui, -apple-system, 'Outfit', 'Montserrat', 'Arial Black', sans-serif" 
+        font-weight="900" 
+        font-size="38" 
+        letter-spacing="4" 
+        fill="#17120D">MOMENTS</text>
+</svg>
